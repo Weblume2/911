@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SKOP BRU | Kasi Experience</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;700;900&display=swap');
+
+    :root {
+      --bg-black: #0A0A0A;
+      --off-white: #F5F5F5;
+      --sa-green: #007A4D;
+      --sa-gold: #FFB612;
+      --sa-red: #E03C31;
+    }
+
+    body {
+      background-color: var(--bg-black);
+      color: var(--off-white);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .font-anton {
+      font-family: 'Anton', sans-serif;
+      text-transform: uppercase;
+    }
+
+    /* Glitch Effect */
+    .glitch-text {
+      position: relative;
+      color: var(--off-white);
+    }
+    .glitch-text::before, .glitch-text::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-black);
+    }
+    .glitch-text::before {
+      left: 2px;
+      text-shadow: -2px 0 var(--sa-red);
+      clip: rect(24px, 550px, 90px, 0);
+      animation: glitch-anim 3s infinite linear alternate-reverse;
+    }
+    .glitch-text::after {
+      left: -2px;
+      text-shadow: -2px 0 var(--sa-green);
+      clip: rect(85px, 550px, 140px, 0);
+      animation: glitch-anim 2.5s infinite linear alternate-reverse;
+    }
+
+    @keyframes glitch-anim {
+      0% { clip: rect(10px, 9999px, 44px, 0); }
+      5% { clip: rect(70px, 9999px, 81px, 0); }
+      10% { clip: rect(27px, 9999px, 97px, 0); }
+      15% { clip: rect(89px, 9999px, 13px, 0); }
+      20% { clip: rect(51px, 9999px, 8px, 0); }
+      25% { clip: rect(93px, 9999px, 55px, 0); }
+      30% { clip: rect(4px, 9999px, 73px, 0); }
+      35% { clip: rect(62px, 9999px, 20px, 0); }
+      40% { clip: rect(31px, 9999px, 91px, 0); }
+      45% { clip: rect(19px, 9999px, 46px, 0); }
+      50% { clip: rect(82px, 9999px, 28px, 0); }
+      55% { clip: rect(59px, 9999px, 64px, 0); }
+      60% { clip: rect(14px, 9999px, 39px, 0); }
+      65% { clip: rect(75px, 9999px, 86px, 0); }
+      70% { clip: rect(48px, 9999px, 12px, 0); }
+      75% { clip: rect(22px, 9999px, 98px, 0); }
+      80% { clip: rect(96px, 9999px, 50px, 0); }
+      85% { clip: rect(3px, 9999px, 71px, 0); }
+      90% { clip: rect(66px, 9999px, 25px, 0); }
+      95% { clip: rect(37px, 9999px, 80px, 0); }
+      100% { clip: rect(11px, 9999px, 42px, 0); }
+    }
+
+    /* Marquee */
+    .marquee-container {
+      white-space: nowrap;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+    .marquee-content {
+      display: inline-block;
+      padding-left: 100%;
+      animation: marquee 15s linear infinite;
+    }
+    @keyframes marquee {
+      0% { transform: translate(0, 0); }
+      100% { transform: translate(-100%, 0); }
+    }
+
+    /* Gritty Image Filter */
+    .gritty-img {
+      filter: grayscale(80%) contrast(120%) brightness(90%);
+      transition: all 0.3s ease;
+    }
+    .gritty-img:hover {
+      filter: grayscale(0%) contrast(110%) brightness(100%);
+    }
+
+    /* Button Shake */
+    .btn-shake:hover {
+      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+
+    /* Graffiti Tag Animation */
+    .graffiti-pop {
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5) rotate(-10deg); opacity: 0; }
+      100% { transform: scale(1) rotate(calc(var(--rot, 0) * 1deg)); opacity: 1; }
+    }
+    
+    /* Noise Overlay */
+    .noise-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    }
+
+    /* Utilities */
+    .hidden { display: none !important; }
+    
+    @keyframes slideIn {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+    .animate-slide-in {
+      animation: slideIn 0.3s ease-out forwards;
+    }
+    .animate-slide-in-slow {
+      animation: slideIn 0.4s ease-out forwards;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="noise-overlay"></div>
+
+  <!-- NAVBAR -->
+  <nav class="fixed top-0 w-full z-50 mix-blend-difference bg-transparent p-4 md:p-6 flex justify-between items-center">
+    <div class="flex items-center gap-4">
+      <svg class="text-[#F5F5F5] cursor-pointer hover:text-[#007A4D] transition-colors" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      <span onclick="navigate('vault')" class="hidden md:block font-bold text-[#F5F5F5] hover:text-[#FFB612] cursor-pointer tracking-widest uppercase transition-colors">The Vault</span>
+    </div>
+    <div onclick="navigate('home')" class="font-anton text-3xl tracking-wider glitch-text text-[#F5F5F5] cursor-pointer" data-text="SKOP BRU">
+      SKOP BRU
+    </div>
+    <div class="relative cursor-pointer group" onclick="toggleCart(true)">
+      <svg class="text-[#F5F5F5] group-hover:text-[#FFB612] transition-colors" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+      <span id="cart-badge" class="hidden absolute -top-2 -right-2 bg-[#E03C31] text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center font-anton">0</span>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <header id="hero" class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-[#0A0A0A]">
+    <!-- Changed background to a generic abstract so it doesn't rely on unsplash if possible, but kept the styling -->
+    <div class="absolute inset-0 opacity-40 bg-cover bg-center gritty-img" style="background-color: #1a1a1a; background-image: repeating-linear-gradient(45deg, #000 25%, transparent 25%, transparent 75%, #000 75%, #000), repeating-linear-gradient(45deg, #000 25%, #1a1a1a 25%, #1a1a1a 75%, #000 75%, #000); background-position: 0 0, 10px 10px; background-size: 20px 20px;"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/60 to-[#0A0A0A]"></div>
+
+    <div class="relative z-10 flex flex-col items-center text-center px-4 w-full max-w-5xl">
+      <div class="text-7xl md:text-9xl mb-4 animate-pulse">✊</div>
+      
+      <h1 id="hero-headline" class="text-5xl md:text-8xl font-anton mb-6 leading-none tracking-tight">
+        <!-- Injected via JS -->
+      </h1>
+
+      <div class="h-20 flex items-center justify-center relative w-full mb-12">
+        <h2 id="hero-slang" class="absolute text-4xl md:text-6xl font-black text-[#007A4D] graffiti-pop drop-shadow-lg" style="font-family: 'Inter', sans-serif;">
+          <!-- Injected via JS -->
+        </h2>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+        <button onclick="navigate('vault')" class="btn-shake bg-[#F5F5F5] text-[#0A0A0A] font-anton text-2xl px-10 py-4 hover:bg-[#FFB612] transition-colors uppercase border-4 border-transparent hover:border-[#0A0A0A]">
+          Enter The Vault
+        </button>
+        <button class="btn-shake bg-transparent border-4 border-[#F5F5F5] text-[#F5F5F5] font-anton text-2xl px-10 py-4 hover:bg-[#E03C31] hover:border-[#E03C31] transition-colors uppercase">
+          Join the Bru Fam
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HOME VIEW -->
+  <div id="view-home">
+    <!-- MANIFESTO -->
+    <section class="py-24 px-6 bg-[#0A0A0A] border-y-8 border-[#FFB612] relative overflow-hidden">
+      <div class="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none" style="background: repeating-linear-gradient(45deg, #000, #000 10px, #FFB612 10px, #FFB612 20px)"></div>
+      <div class="max-w-4xl mx-auto text-center relative z-10">
+        <p class="text-2xl md:text-5xl font-black leading-tight text-[#F5F5F5] uppercase tracking-wide">
+          Born in <span class="text-[#007A4D]">South Africa.</span> Raised in the <span class="text-[#E03C31]">streets.</span><br><br>
+          SKOP BRU isn’t just clothing — it’s attitude. It’s for the ous who speak loud, laugh louder, and don’t ask for permission.<br><br>
+          <span class="text-[#FFB612]">If you know, you know. If you don’t — you will.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="bg-[#E03C31] py-3 border-y-4 border-[#0A0A0A] marquee-container font-anton text-2xl text-[#0A0A0A]">
+      <div class="marquee-content">
+        ✊ NO APOLOGIES ✊ LOUD FITS ✊ STRAIGHT FROM THE KASI ✊ DIS HOE ONS ROL ✊ AWEH ✊ NO APOLOGIES ✊ LOUD FITS ✊ STRAIGHT FROM THE KASI ✊ DIS HOE ONS ROL ✊ AWEH ✊
+      </div>
+    </div>
+
+    <!-- FEATURED DROPS -->
+    <section class="py-24 px-4 md:px-8 bg-[#F5F5F5] text-[#0A0A0A]">
+      <div class="max-w-7xl mx-auto">
+        <div class="flex justify-between items-end mb-12">
+          <h2 class="text-6xl md:text-8xl font-anton">THE <br><span class="text-[#E03C31] glitch-text" data-text="DROP">DROP</span></h2>
+          <div class="hidden md:flex flex-col items-end">
+            <span class="font-bold uppercase text-sm text-[#E03C31] mb-2 border-2 border-[#E03C31] px-2 py-1">Limited Stock</span>
+            <p class="font-bold max-w-xs text-right">We only highlight the absolute heat. Enter the vault to see it all.</p>
+          </div>
+        </div>
+
+        <div id="home-featured-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+          <!-- Injected via JS -->
+        </div>
+
+        <div onclick="navigate('vault')" class="w-full bg-[#0A0A0A] border-8 border-[#0A0A0A] cursor-pointer relative overflow-hidden group py-16 md:py-24 flex items-center justify-center">
+          <div class="absolute inset-0 bg-[#FFB612] transform translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-[cubic-bezier(0.19,1,0.22,1)]"></div>
+          <div class="absolute inset-0 opacity-20 bg-cover bg-center gritty-img mix-blend-screen" style="background-color: #333;"></div>
+          <h2 class="font-anton text-5xl md:text-8xl text-[#F5F5F5] group-hover:text-[#0A0A0A] relative z-10 transition-colors duration-500 uppercase tracking-tighter text-center px-4 flex flex-col md:flex-row items-center gap-6">
+            ENTER THE VAULT 
+            <svg class="group-hover:translate-x-6 transition-transform" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </h2>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT / SPLIT STORY -->
+    <section class="bg-[#0A0A0A] border-t border-[#333]">
+      <div class="flex flex-col lg:flex-row min-h-screen">
+        <div class="lg:w-1/2 relative h-[50vh] lg:h-auto overflow-hidden bg-[#222]">
+           <div class="absolute inset-0 w-full h-full object-cover gritty-img opacity-60 bg-gradient-to-tr from-[#E03C31]/20 to-[#FFB612]/20"></div>
+           <div class="absolute top-1/4 left-10 bg-[#FFB612] text-[#0A0A0A] font-anton text-2xl p-2 rotate-3 shadow-xl">Made for the kasi</div>
+           <div class="absolute bottom-1/4 right-10 bg-[#007A4D] text-[#F5F5F5] font-anton text-2xl p-2 -rotate-6 shadow-xl">Tested at every braai</div>
+        </div>
+        <div class="lg:w-1/2 p-12 lg:p-24 flex flex-col justify-center">
+          <h2 class="text-5xl lg:text-7xl font-anton text-[#F5F5F5] mb-8">
+            NO FILTERS.<br><span class="text-[#E03C31]">NO APOLOGIES.</span>
+          </h2>
+          <p class="text-xl text-gray-400 font-bold leading-relaxed mb-8 uppercase">
+            SKOP BRU started with one idea — make clothing that speaks like we do. Pure South African energy. Designed for the hustle, built to withstand the chaos.
+          </p>
+          <button class="self-start flex items-center gap-2 font-anton text-2xl text-[#FFB612] hover:text-[#F5F5F5] transition-colors border-b-4 border-[#FFB612] hover:border-[#F5F5F5] pb-1">
+            READ THE FULL STORY <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEWSLETTER -->
+    <section class="py-24 px-6 bg-[#007A4D] text-[#F5F5F5] text-center border-y-8 border-[#0A0A0A]">
+      <h2 class="text-6xl md:text-8xl font-anton mb-6 uppercase">JOIN THE <span class="text-[#0A0A0A]">BRU FAM</span></h2>
+      <p class="text-2xl font-bold mb-10 max-w-2xl mx-auto">Get early drops, secret heat, and first dibs before the rest wake up.</p>
+      <div class="flex flex-col sm:flex-row max-w-xl mx-auto gap-4">
+        <input type="email" placeholder="YOUR EMAIL, BRU..." class="flex-1 bg-[#F5F5F5] text-[#0A0A0A] font-bold p-4 text-xl border-4 border-[#0A0A0A] focus:outline-none focus:border-[#E03C31]">
+        <button class="btn-shake bg-[#0A0A0A] text-[#FFB612] font-anton text-2xl px-8 py-4 uppercase border-4 border-[#0A0A0A] hover:bg-[#E03C31] hover:text-[#F5F5F5] transition-colors">
+          SIGN ME UP
+        </button>
+      </div>
+    </section>
+  </div>
+
+  <!-- THE VAULT VIEW -->
+  <div id="view-vault" class="hidden min-h-screen bg-[#F5F5F5] pt-32 pb-24 px-4 md:px-8 text-[#0A0A0A]">
+    <div class="max-w-7xl mx-auto">
+      <div class="mb-8">
+        <button onclick="navigate('home')" class="flex items-center gap-2 font-anton text-xl md:text-2xl uppercase text-[#0A0A0A] hover:text-[#E03C31] transition-colors group">
+          <svg class="rotate-180 group-hover:-translate-x-2 transition-transform" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          Back to the Streets
+        </button>
+      </div>
+      
+      <div class="mb-16 border-b-8 border-[#0A0A0A] pb-12">
+        <h1 class="text-7xl md:text-9xl font-anton text-[#0A0A0A] uppercase glitch-text leading-none mb-6" data-text="THE VAULT">THE VAULT</h1>
+        <p class="text-2xl font-black uppercase text-[#E03C31] max-w-2xl">The full archive. Every piece of heat we've ever dropped. No restocks. When it's gone, it's gone.</p>
+      </div>
+
+      <div id="vault-filters" class="flex flex-wrap gap-4 mb-12">
+        <!-- Injected via JS -->
+      </div>
+
+      <div id="vault-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Injected via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0A0A0A] text-[#F5F5F5] pt-24 pb-12 px-6 md:px-12 border-t-[16px] border-[#E03C31]">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+      <div class="md:col-span-2">
+        <h2 class="font-anton text-5xl mb-6">SKOP BRU</h2>
+        <p class="font-bold text-gray-400 max-w-sm">
+          Loud. Raw. Unfiltered. <br>Proudly South African. 🇿🇦
+        </p>
+        <div class="flex gap-4 mt-6">
+          <svg class="text-[#F5F5F5] hover:text-[#FFB612] cursor-pointer" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          <span class="font-anton text-3xl cursor-pointer hover:text-[#007A4D]">TT</span>
+        </div>
+      </div>
+      
+      <div>
+        <h3 class="font-anton text-2xl mb-6 text-[#FFB612]">THE BORING STUFF</h3>
+        <ul class="space-y-4 font-bold text-gray-400">
+          <li class="hover:text-[#F5F5F5] cursor-pointer transition-colors">"Shipping takes 2-5 days, bru."</li>
+          <li class="hover:text-[#F5F5F5] cursor-pointer transition-colors">"No funny business. Easy returns."</li>
+          <li class="hover:text-[#F5F5F5] cursor-pointer transition-colors">"If it's trash, we'll fix it."</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="font-anton text-2xl mb-6 text-[#007A4D]">LINKS</h3>
+        <ul class="space-y-4 font-bold text-gray-400">
+          <li class="hover:text-[#F5F5F5] cursor-pointer transition-colors">SHOP ALL</li>
+          <li class="hover:text-[#F5F5F5] cursor-pointer transition-colors">OUR STORY</li>
+          <li class="hover:text-[#F5F5F5] cursor-pointer transition-colors">CONTACT</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="text-center font-bold text-gray-600 uppercase text-sm">
+      &copy; <span id="year"></span> SKOP BRU. ALL RIGHTS RESERVED. DO NOT COPY OUR SH*T.
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div id="cart-drawer" class="hidden fixed inset-0 z-[100] flex justify-end">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="toggleCart(false)"></div>
+    <div class="relative w-full max-w-md bg-[#F5F5F5] h-full shadow-2xl flex flex-col border-l-8 border-[#0A0A0A] animate-slide-in">
+      
+      <div class="p-6 border-b-8 border-[#0A0A0A] flex justify-between items-center bg-[#0A0A0A] text-[#F5F5F5]">
+        <h2 class="font-anton text-4xl">YOUR STASH</h2>
+        <svg class="cursor-pointer hover:text-[#E03C31] transition-colors" onclick="toggleCart(false)" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </div>
+      
+      <div id="cart-content" class="flex-1 overflow-y-auto p-6 text-[#0A0A0A]">
+        <!-- Injected via JS -->
+      </div>
+      
+      <div id="cart-footer" class="hidden p-6 border-t-8 border-[#0A0A0A] bg-white">
+        <div class="flex justify-between items-center mb-6 font-anton text-3xl text-[#0A0A0A]">
+          <span>TOTAL:</span>
+          <span id="cart-total">R0</span>
+        </div>
+        <button class="w-full btn-shake bg-[#0A0A0A] text-[#F5F5F5] font-anton text-3xl py-4 uppercase border-4 border-[#0A0A0A] hover:bg-[#FFB612] hover:text-[#0A0A0A] transition-colors">
+          CHECKOUT NOW
+        </button>
+        <p class="text-center font-bold text-sm mt-3 uppercase text-gray-500">
+          Almost yours, bru. Don't sleep on it.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FULL SCREEN PRODUCT MODAL -->
+  <div id="product-modal" class="hidden fixed inset-0 z-[200] flex bg-[#0A0A0A] overflow-hidden animate-slide-in-slow">
+    <div class="noise-overlay pointer-events-none"></div>
+    
+    <button onclick="closeModal()" class="absolute top-6 right-6 z-50 bg-[#F5F5F5] text-[#0A0A0A] p-2 hover:bg-[#E03C31] hover:text-[#F5F5F5] transition-colors border-4 border-[#0A0A0A]">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+
+    <div class="flex flex-col lg:flex-row w-full h-full overflow-y-auto lg:overflow-hidden">
+      
+      <!-- Left Side: Images -->
+      <div class="lg:w-[60%] bg-[#F5F5F5] border-r-8 border-[#0A0A0A] flex flex-col h-full lg:overflow-y-auto">
+        <div class="w-full bg-[#0A0A0A] text-[#F5F5F5] py-2 border-b-8 border-[#0A0A0A] marquee-container font-anton text-xl uppercase">
+          <div id="modal-marquee" class="marquee-content"></div>
+        </div>
+        
+        <div class="p-6 md:p-12">
+          <div class="border-8 border-[#0A0A0A] mb-4 bg-white relative flex justify-center items-center bg-gray-200 min-h-[300px]">
+            <img id="modal-main-img" src="" alt="" class="w-full h-auto max-h-[70vh] object-cover gritty-img" />
+            <div class="absolute top-4 left-4 bg-[#FFB612] border-4 border-[#0A0A0A] font-anton text-xl px-3 py-1 -rotate-6">
+              MANDATORY
+            </div>
+          </div>
+          
+          <div id="modal-thumbnails" class="flex gap-4 overflow-x-auto pb-4">
+            <!-- Injected via JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side: Details -->
+      <div class="lg:w-[40%] bg-[#0A0A0A] text-[#F5F5F5] p-8 md:p-12 flex flex-col justify-center">
+        <div class="max-w-md mx-auto w-full">
+          <h2 id="modal-title" class="font-anton text-6xl md:text-7xl mb-2 text-[#FFB612] leading-none uppercase glitch-text" data-text=""></h2>
+          <p id="modal-price" class="font-black text-4xl text-[#E03C31] mb-8"></p>
+          
+          <p id="modal-desc" class="text-xl font-bold mb-6 text-gray-300 uppercase"></p>
+          <div class="w-16 h-2 bg-[#007A4D] mb-6"></div>
+          <p id="modal-details" class="text-gray-400 mb-10 leading-relaxed font-bold"></p>
+
+          <div class="mb-10">
+            <div class="flex justify-between items-end mb-4">
+              <span class="font-anton text-2xl tracking-wider">SELECT SIZE</span>
+              <span class="text-xs font-bold text-gray-500 uppercase underline cursor-pointer hover:text-[#FFB612]">Size Guide</span>
+            </div>
+            <div id="modal-sizes" class="flex flex-wrap gap-3">
+              <!-- Injected via JS -->
+            </div>
+          </div>
+
+          <button id="modal-add-btn" onclick="addToCartFromModal()" class="w-full btn-shake bg-[#007A4D] text-[#F5F5F5] font-anton text-3xl py-5 uppercase border-4 border-[#F5F5F5] hover:bg-[#FFB612] hover:text-[#0A0A0A] hover:border-[#0A0A0A] transition-colors relative overflow-hidden group">
+            <span class="relative z-10 flex justify-center items-center gap-3">
+              DROP IN CART 
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+            </span>
+            <div class="absolute inset-0 bg-[#E03C31] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out"></div>
+          </button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const PRODUCTS = [
+      { id: 1, category: 'hoodies', name: "SKOP HEAVYWEIGHT HOODIE", price: 850, img: "Hoodie1.jpg", images: ["Hoodie1.jpg"], tag: "Winter Armor", desc: "Built for cold mornings and late nights.", details: "Premium heavy cotton. Drop shoulders. You wear this when the temperature drops but the hustle doesn't. Built to survive the garage and the streets." },
+      { id: 2, category: 'hoodies', name: "STREET TECH PULLOVER", price: 900, img: "Hoodie2.jpg", images: ["Hoodie2.jpg"], tag: "Stealth Mode", desc: "Keep your head down, keep grinding.", details: "Thick, durable, and unapologetic. Oversized hood to block out the noise while you put in the work. Screen-printed in the motherland." },
+      { id: 3, category: 'tees', name: "RAW GRAPHIC TEE", price: 350, img: "Shirt1.jpg", images: ["Shirt1.jpg"], tag: "Everyday Heat", desc: "Loud graphics, premium fit.", details: "100% carded cotton. Heat-pressed to survive the wash. Wear it till it fades, then wear it more. Essential kit." },
+      { id: 4, category: 'tees', name: "KASI UNIFORM SHIRT", price: 350, img: "Shirt2.jpg", images: ["Shirt2.jpg"], tag: "Standard Issue", desc: "No introduction needed.", details: "The core of your wardrobe. Fits boxy, breathes well, makes a statement without you saying a word." },
+      { id: 5, category: 'tees', name: "GLITCH CORE TEE", price: 380, img: "Shirt3.jpg", images: ["Shirt3.jpg"], tag: "System Override", desc: "Mess with the best.", details: "Distressed aesthetic. When things get chaotic, this is what you're wearing. Premium heavyweight cotton." },
+      { id: 6, category: 'headwear', name: "CROWN 5-PANEL CAP", price: 250, img: "Cap1.jpg", images: ["Cap1.jpg"], tag: "Top Off", desc: "Hide the bedhead.", details: "Standard issue 5-panel. Adjustable back. Slap it on when you haven't seen a barber since last month, or when you're under the Pajero." }
+    ];
+
+    const SLANGS = ["EISH BRU", "SHARP SHARP", "HOSH KARAMA", "AWEH!", "YOH 😭", "JY WEET MOS"];
+    const HEADLINES = [
+      "SKOP BRU – DIS HOE ONS ROL",
+      "FOR THE BRU’S THAT DON’T PLAY NICE",
+      "STRAIGHT FROM THE KASI TO YOUR CUPBOARD",
+      "LOUD FITS FOR LOUD MOUTHS"
+    ];
+
+    let cart = [];
+    let currentView = 'home';
+    let activeFilter = 'all';
+    let selectedProduct = null;
+    let activeImageIndex = 0;
+    let selectedSize = 'L';
+    let slangIndex = 0;
+    let headlineIndex = 0;
+
+    // -- INIT TIMERS --
+    setInterval(() => {
+      slangIndex = (slangIndex + 1) % SLANGS.length;
+      const slangEl = document.getElementById('hero-slang');
+      slangEl.textContent = `"${SLANGS[slangIndex]}"`;
+      slangEl.style.setProperty('--rot', Math.random() * 20 - 10);
+      
+      // Re-trigger animation
+      slangEl.classList.remove('graffiti-pop');
+      void slangEl.offsetWidth; 
+      slangEl.classList.add('graffiti-pop');
+    }, 2000);
+
+    setInterval(() => {
+      headlineIndex = (headlineIndex + 1) % HEADLINES.length;
+      updateHeadline();
+    }, 4000);
+
+    function updateHeadline() {
+      const words = HEADLINES[headlineIndex].split(' ');
+      const html = words.map((word, i) => 
+        `<span class="${i % 2 === 0 ? 'text-[#F5F5F5]' : 'text-[#FFB612]'}">${word} </span>`
+      ).join('');
+      document.getElementById('hero-headline').innerHTML = html;
+    }
+
+    // -- NAVIGATION --
+    function navigate(view) {
+      currentView = view;
+      window.scrollTo(0, 0);
+      if (view === 'home') {
+        document.getElementById('view-home').classList.remove('hidden');
+        document.getElementById('view-vault').classList.add('hidden');
+        document.getElementById('hero').classList.remove('hidden');
+      } else {
+        document.getElementById('view-home').classList.add('hidden');
+        document.getElementById('view-vault').classList.remove('hidden');
+        document.getElementById('hero').classList.add('hidden');
+        renderVault();
+      }
+    }
+
+    // -- RENDERING GRIDS --
+    function renderHomeFeatured() {
+      const grid = document.getElementById('home-featured-grid');
+      grid.innerHTML = PRODUCTS.slice(0, 2).map((product, idx) => `
+        <div onclick="openModal(${product.id})" class="group relative border-8 border-[#0A0A0A] bg-white cursor-pointer transition-transform duration-300 hover:-translate-y-2 ${idx % 2 === 0 ? 'hover:-rotate-1' : 'hover:rotate-1'}">
+          <div class="overflow-hidden relative h-[450px] md:h-[600px] bg-gray-200 flex items-center justify-center">
+            <span class="absolute text-gray-400 font-anton text-xl opacity-50 pointer-events-none">${product.img}</span>
+            <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover gritty-img group-hover:scale-105 z-10 relative" />
+            <div class="absolute inset-0 bg-[#0A0A0A]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6 text-center backdrop-blur-sm z-20">
+              <div>
+                <h3 class="font-anton text-4xl text-[#FFB612] mb-2 -rotate-3">${product.tag}</h3>
+                <p class="text-[#F5F5F5] font-bold text-lg mb-6">${product.desc}</p>
+                <button onclick="event.stopPropagation(); addToCartDirect(${product.id}, 'L')" class="btn-shake bg-[#E03C31] text-[#F5F5F5] font-anton text-2xl px-8 py-3 uppercase border-4 border-[#0A0A0A]">
+                  QUICK ADD 🛒
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="p-6 border-t-8 border-[#0A0A0A] flex justify-between items-center bg-white relative z-10">
+            <div>
+              <p class="font-bold text-xs uppercase text-gray-500 tracking-wider mb-1">${product.category}</p>
+              <h3 class="font-anton text-3xl">${product.name}</h3>
+            </div>
+            <p class="font-black text-3xl text-[#007A4D]">R${product.price}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function renderVaultFilters() {
+      const filters = ['all', 'hoodies', 'tees', 'headwear'];
+      const container = document.getElementById('vault-filters');
+      container.innerHTML = filters.map(cat => `
+        <button onclick="setFilter('${cat}')" class="font-anton text-xl md:text-2xl px-6 py-3 border-4 uppercase transition-all ${activeFilter === cat ? 'bg-[#0A0A0A] text-[#F5F5F5] border-[#0A0A0A] -translate-y-1 shadow-[4px_4px_0px_#E03C31]' : 'bg-transparent text-[#0A0A0A] border-[#0A0A0A] hover:bg-[#FFB612]'}">
+          ${cat}
+        </button>
+      `).join('');
+    }
+
+    function setFilter(cat) {
+      activeFilter = cat;
+      renderVault();
+    }
+
+    function renderVault() {
+      renderVaultFilters();
+      const grid = document.getElementById('vault-grid');
+      const filtered = PRODUCTS.filter(p => activeFilter === 'all' || p.category === activeFilter);
+      grid.innerHTML = filtered.map(product => `
+        <div onclick="openModal(${product.id})" class="group relative border-4 border-[#0A0A0A] bg-white cursor-pointer transition-transform duration-300 hover:-translate-y-2">
+          <div class="overflow-hidden relative h-[350px] bg-gray-200 flex items-center justify-center">
+            <span class="absolute text-gray-400 font-anton text-sm opacity-50 pointer-events-none">${product.img}</span>
+            <img src="${product.img}" alt="${product.name}" class="w-full h-full object-cover gritty-img group-hover:scale-105 z-10 relative" />
+            <div class="absolute inset-0 bg-[#E03C31]/90 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col items-center justify-center p-4 text-center backdrop-blur-sm z-20">
+              <h3 class="font-anton text-3xl text-[#F5F5F5] mb-4 -rotate-3">${product.tag}</h3>
+              <button onclick="event.stopPropagation(); addToCartDirect(${product.id}, 'L')" class="bg-[#0A0A0A] text-[#F5F5F5] font-anton text-xl px-6 py-2 uppercase border-2 border-[#0A0A0A] hover:text-[#FFB612] btn-shake">
+                QUICK ADD +
+              </button>
+            </div>
+          </div>
+          <div class="p-4 border-t-4 border-[#0A0A0A] bg-white relative z-10">
+            <h3 class="font-anton text-xl mb-1">${product.name}</h3>
+            <div class="flex justify-between items-end mt-2">
+              <p class="font-bold text-gray-500 uppercase text-[10px] tracking-widest">${product.category}</p>
+              <p class="font-black text-xl text-[#007A4D]">R${product.price}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // -- CART LOGIC --
+    function toggleCart(show) {
+      const drawer = document.getElementById('cart-drawer');
+      if (show) drawer.classList.remove('hidden');
+      else drawer.classList.add('hidden');
+      renderCart();
+    }
+
+    function addToCartDirect(id, size) {
+      const product = PRODUCTS.find(p => p.id === id);
+      cart.push({ ...product, size });
+      updateCartBadge();
+      toggleCart(true);
+    }
+
+    function addToCartFromModal() {
+      if (!selectedProduct) return;
+      cart.push({ ...selectedProduct, size: selectedSize });
+      updateCartBadge();
+      closeModal();
+      toggleCart(true);
+    }
+
+    function updateCartBadge() {
+      const badge = document.getElementById('cart-badge');
+      if (cart.length > 0) {
+        badge.textContent = cart.length;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cart-content');
+      const footer = document.getElementById('cart-footer');
+      const totalEl = document.getElementById('cart-total');
+
+      if (cart.length === 0) {
+        container.innerHTML = `
+          <div class="h-full flex flex-col justify-center items-center text-center opacity-50">
+            <span class="text-6xl mb-4">🛒</span>
+            <h3 class="font-anton text-3xl">NOTHING HERE YET.</h3>
+            <p class="font-bold mt-2">Go get some heat, bru.</p>
+          </div>
+        `;
+        footer.classList.add('hidden');
+      } else {
+        container.innerHTML = `
+          <div class="space-y-6">
+            <p class="font-bold text-[#007A4D] bg-[#007A4D]/10 p-3 border-l-4 border-[#007A4D]">
+              Aweh 👀 you've got good taste.
+            </p>
+            ${cart.map((item) => `
+              <div class="flex gap-4 border-4 border-[#0A0A0A] p-2 bg-white">
+                <div class="w-24 h-24 bg-gray-200 border-2 border-[#0A0A0A] flex items-center justify-center relative overflow-hidden">
+                  <span class="absolute text-gray-400 font-anton text-xs opacity-50 pointer-events-none">${item.img}</span>
+                  <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover gritty-img relative z-10" />
+                </div>
+                <div class="flex-1 flex flex-col justify-center">
+                  <h4 class="font-anton text-xl leading-tight">${item.name} (${item.size})</h4>
+                  <p class="font-black text-[#E03C31] mt-1">R${item.price}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        const total = cart.reduce((sum, item) => sum + item.price, 0);
+        totalEl.textContent = `R${total}`;
+        footer.classList.remove('hidden');
+      }
+    }
+
+    // -- MODAL LOGIC --
+    function openModal(id) {
+      selectedProduct = PRODUCTS.find(p => p.id === id);
+      activeImageIndex = 0;
+      selectedSize = 'L';
+      
+      document.getElementById('modal-marquee').innerHTML = `🔥 ${selectedProduct.name} 🔥 THE KASI STANDARD 🔥 RAW MATERIAL 🔥 ${selectedProduct.name} 🔥 THE KASI STANDARD 🔥`;
+      document.getElementById('modal-title').textContent = selectedProduct.name;
+      document.getElementById('modal-title').setAttribute('data-text', selectedProduct.name);
+      document.getElementById('modal-price').textContent = `R${selectedProduct.price}`;
+      document.getElementById('modal-desc').textContent = selectedProduct.desc;
+      document.getElementById('modal-details').textContent = selectedProduct.details;
+      
+      updateModalImages();
+      renderModalSizes();
+      
+      document.getElementById('product-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('product-modal').classList.add('hidden');
+      selectedProduct = null;
+    }
+
+    function updateModalImages() {
+      const mainImg = document.getElementById('modal-main-img');
+      mainImg.src = selectedProduct.images[activeImageIndex];
+
+      const thumbContainer = document.getElementById('modal-thumbnails');
+      thumbContainer.innerHTML = selectedProduct.images.map((img, idx) => `
+        <div class="w-24 h-24 md:w-32 md:h-32 bg-gray-200 border-4 ${activeImageIndex === idx ? 'border-[#E03C31] opacity-100 scale-105' : 'border-[#0A0A0A] opacity-60 hover:opacity-100'} cursor-pointer transition-all flex items-center justify-center relative overflow-hidden" onclick="setModalImage(${idx})">
+            <span class="absolute text-gray-400 font-anton text-[10px] opacity-50 pointer-events-none">${img}</span>
+            <img src="${img}" alt="Thumbnail" class="w-full h-full object-cover relative z-10" />
+        </div>
+      `).join('');
+    }
+
+    function setModalImage(idx) {
+      activeImageIndex = idx;
+      updateModalImages();
+    }
+
+    function renderModalSizes() {
+      const sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+      const container = document.getElementById('modal-sizes');
+      container.innerHTML = sizes.map(size => `
+        <button onclick="setModalSize('${size}')" class="font-anton text-xl px-6 py-3 border-4 transition-all ${selectedSize === size ? 'bg-[#F5F5F5] text-[#0A0A0A] border-[#F5F5F5] -translate-y-1 shadow-[4px_4px_0px_#E03C31]' : 'bg-transparent text-[#F5F5F5] border-[#F5F5F5] hover:bg-[#333]'}">
+          ${size}
+        </button>
+      `).join('');
+    }
+
+    function setModalSize(size) {
+      selectedSize = size;
+      renderModalSizes();
+    }
+
+    // Initialize
+    document.getElementById('hero-slang').textContent = `"${SLANGS[0]}"`;
+    updateHeadline();
+    renderHomeFeatured();
+  </script>
+</body>
+</html>
